@@ -13,6 +13,12 @@ export class User {
   password: string;
 
   @Prop()
+  hashRt: string;
+
+  @Prop({ default: false })
+  active: boolean;
+
+  @Prop()
   role: Role;
 
   @Prop()
