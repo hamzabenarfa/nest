@@ -13,6 +13,7 @@ import { SignupDto } from './dto/signup.dto';
 import { Tokens } from './types';
 import { MailerService } from 'src/mailer/mailer.service';
 import { TokenService } from './token.service';
+import { authenticator } from 'otplib';
 
 @Injectable()
 export class AuthService {
@@ -23,25 +24,54 @@ export class AuthService {
   ) {}
 
   async otpSend(data): Promise<boolean> {
-    const userExist = await this.userModel.findOne({ email: data.email });
-    if (!userExist) {
+    const user = await this.userModel.findOne({ email: data.email });
+    if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    const otp = this.mailerService.generateOtp();
 
+    const otp = authenticator.generate(process.env.OTP_SECRET);
+    const expiry = new Date(Date.now() + 5 * 60 * 1000); // OTP expires in 5 minutes
+
+    // Save OTP and expiry to user document
+    user.otp = otp;
+    user.otpExpiry = expiry;
+    await user.save();
+
+    // Send OTP to user’s email
     await this.mailerService.sendMail({
-      to: userExist.email,
-      subject: 'OTP',
-      text: otp.toString(),
+      to: user.email,
+      subject: 'Your OTP Code',
+      text: `Your OTP is: ${otp}. It will expire in 5 minutes.`,
     });
 
     return true;
   }
 
-  otpVerify(code) {
-    return this.mailerService.verifyOtp(code);
-  }
+  async otpVerify(email: string, code: string): Promise<boolean> {
+    const user = await this.userModel.findOne({ email });
+    if (!user || !user.otp || !user.otpExpiry) {
+      throw new HttpException(
+        'Invalid or expired OTP',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
 
+    // Check OTP and expiry time
+    if (user.otp !== code || user.otpExpiry < new Date()) {
+      throw new HttpException(
+        'Invalid or expired OTP',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    // Activate account and clear OTP fields
+    user.active = true;
+    user.otp = null;
+    user.otpExpiry = null;
+    await user.save();
+
+    return true;
+  }
   async login(loginData: LoginDto): Promise<Tokens> {
     const userExist = await this.userModel.findOne({ email: loginData.email });
     if (!userExist) {

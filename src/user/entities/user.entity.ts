@@ -17,7 +17,11 @@ export class User {
 
   @Prop({ default: false })
   active: boolean;
+  @Prop()
+  otp: string;
 
+  @Prop()
+  otpExpiry: Date;
   @Prop()
   role: Role;
 

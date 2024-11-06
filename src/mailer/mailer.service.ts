@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import { SendMailDto } from './dto/send-mail.dto';
-import { authenticator } from 'otplib';
+
 
 @Injectable()
 export class MailerService {
@@ -28,11 +28,5 @@ export class MailerService {
     });
   }
 
-  generateOtp() {
-    return authenticator.generate(process.env.OTP_SECRET);
-  }
 
-  verifyOtp(token: string) {
-    return authenticator.verify({ token, secret: process.env.OTP_SECRET });
-  } 
 }

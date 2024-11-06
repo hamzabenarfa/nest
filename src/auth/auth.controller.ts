@@ -46,9 +46,11 @@ export class AuthController {
   @Public()
   @Post('otp-verify')
   @HttpCode(HttpStatus.OK)
-  async otpVerify(@Body() code: number) {
-    return await this.authService.otpVerify(code);
+  async otpVerify(@Body() { email, code }: { email: string; code: string }) {
+    const isValid = this.authService.otpVerify(email, code);
+    return { message: isValid ? 'OTP verified successfully' : 'Invalid OTP' };
   }
+
 
   @UseGuards(AtGuard)
   @Post('logout')
