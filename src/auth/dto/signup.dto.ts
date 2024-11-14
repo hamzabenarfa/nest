@@ -5,7 +5,7 @@ import {
   IsString,
   MinLength,
 } from '@nestjs/class-validator';
-import { IsOptional, Max, Min } from 'class-validator';
+import { IsOptional, Max, MaxLength, Min } from 'class-validator';
 import { Role } from 'src/enums/role.enum';
 
 export class SignupDto {
@@ -24,8 +24,8 @@ export class SignupDto {
   name: string;
 
   @IsOptional()
-  @Min(8)
-  @Max(8)
+  @MinLength(8)
+  @MaxLength(8)
   phone?: string;
 
   @IsString()
