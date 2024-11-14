@@ -29,6 +29,7 @@ export class SignupDto {
   phone?: string;
 
   @IsString()
+  @IsOptional()
   @IsEnum(Role)
   role: Role;
 }
