@@ -51,14 +51,12 @@ export class AuthController {
     return { message: isValid ? 'OTP verified successfully' : 'Invalid OTP' };
   }
 
-
   @UseGuards(AtGuard)
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(
     @GetCurrentUserId() userId: string,
   ): Promise<{ message: string }> {
-
     await this.authService.logout(userId);
 
     return { message: 'Logged out successfully' };

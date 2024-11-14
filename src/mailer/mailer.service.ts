@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import { SendMailDto } from './dto/send-mail.dto';
 
-
 @Injectable()
 export class MailerService {
   mailTransport() {
@@ -27,6 +26,4 @@ export class MailerService {
       text,
     });
   }
-
-
 }

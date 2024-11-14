@@ -83,7 +83,7 @@ export class AuthService {
       loginData.password,
     );
     if (!passwordMatch) {
-      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+      throw new HttpException('Invalid password', HttpStatus.BAD_REQUEST);
     }
 
     const tokens = await this.tokenService.generateTokens(

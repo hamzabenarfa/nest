@@ -9,7 +9,10 @@ export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async editProfile(id: string, userData: UpdateUserDto) {
-    return await this.userModel.findByIdAndUpdate(id, userData, { new: true });
+    return await this.userModel
+      .findByIdAndUpdate(id, userData, { new: true })
+      .select('-password -hashRt') 
+      .lean();
   }
 
   async deleteProfile(id: string) {
