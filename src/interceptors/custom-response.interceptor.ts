@@ -29,21 +29,20 @@ export class CustomResponseInterceptor<T>
           const response = error.getResponse();
           const errorMessage =
             typeof response === 'string' ? response : (response as any).message;
-          const errors =
-            typeof response === 'object' && (response as any).errors
-              ? (response as any).errors
-              : { error: [errorMessage] };
+          const errors = Array.isArray(errorMessage)
+            ? errorMessage.flat()
+            : [errorMessage];
           return throwError(
             () =>
               new BadRequestException({
                 status: false,
-                message: errorMessage || 'An error occurred',
+                message: 'Validation failed',
                 data: null,
                 errors,
               }),
           );
         }
-        return throwError(() => error); // Propagate other errors
+        return throwError(() => error); 
       }),
     );
   }
