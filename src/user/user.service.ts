@@ -11,7 +11,7 @@ export class UserService {
   async editProfile(id: string, userData: UpdateUserDto) {
     return await this.userModel
       .findByIdAndUpdate(id, userData, { new: true })
-      .select('-password -hashRt') 
+      .select('-password -hashRt')
       .lean();
   }
 

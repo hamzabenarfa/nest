@@ -22,7 +22,7 @@ export class TokenService {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         { sub: userId, email, role },
-        { secret: process.env.AT_SECRET, expiresIn: '15m' },
+        { secret: process.env.AT_SECRET, expiresIn: '50m' },
       ),
       this.jwtService.signAsync(
         { sub: userId, email, role },

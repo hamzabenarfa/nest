@@ -6,6 +6,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AtGuard } from './common/guards';
 import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from './mailer/mailer.module';
+import { MatchModule } from './match/match.module';
+import { MatchPlayerModule } from './match-player/match-player.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { MailerModule } from './mailer/mailer.module';
     MongooseModule.forRoot(process.env.MONGO_URI),
     AuthModule,
     MailerModule,
+    MatchModule,
+    MatchPlayerModule,
   ],
   providers: [
     {

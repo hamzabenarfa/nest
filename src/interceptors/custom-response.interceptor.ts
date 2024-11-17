@@ -42,7 +42,7 @@ export class CustomResponseInterceptor<T>
               }),
           );
         }
-        return throwError(() => error); 
+        return throwError(() => error);
       }),
     );
   }
