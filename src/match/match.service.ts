@@ -30,6 +30,7 @@ export class MatchService {
     return await this.matchModel
       .find()
       .populate({ path: 'userId', select: 'email name last_name phone' })
+      .populate('terrainId')
       .exec();
   }
 
@@ -37,6 +38,7 @@ export class MatchService {
     return await this.matchModel
       .find({ userId: id })
       .populate({ path: 'userId', select: 'email name last_name phone' })
+      .populate('terrainId')
       .exec();
   }
 

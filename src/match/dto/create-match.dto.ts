@@ -9,9 +9,9 @@ export class CreateMatchDto {
 
   @IsNotEmpty()
   @IsString()
-  longitude: string;
+  terrainId: string;
 
-  @IsNotEmpty()
-  @IsString()
-  latitude: string;
+  // @IsNotEmpty()
+  // @IsString()
+  // latitude: string;
 }

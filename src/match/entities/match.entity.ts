@@ -8,14 +8,11 @@ export class Match {
   @Prop({ type: Date, required: true })
   date: Date = new Date();
 
-  @Prop({ required: true })
-  longitude: string;
-
-  @Prop({ required: true })
-  latitude: string;
-
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   userId: Types.ObjectId;
+
+  @Prop({ type: Types.ObjectId, ref: 'Terrain', required: true })
+  terrainId: Types.ObjectId;
 }
 
 export const MatchSchema = SchemaFactory.createForClass(Match);

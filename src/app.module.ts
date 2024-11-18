@@ -8,6 +8,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MailerModule } from './mailer/mailer.module';
 import { MatchModule } from './match/match.module';
 import { MatchPlayerModule } from './match-player/match-player.module';
+import { TerrainModule } from './terrain/terrain.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { MatchPlayerModule } from './match-player/match-player.module';
     MailerModule,
     MatchModule,
     MatchPlayerModule,
+    TerrainModule,
   ],
   providers: [
     {
