@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { MatchPlayerService } from './match-player.service';
 import { GetCurrentUserId } from 'src/common/decorators';
@@ -28,21 +29,21 @@ export class MatchPlayerController {
     return this.matchPlayerService.findAllMatchPlayer();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.matchPlayerService.findOne(+id);
-  // }
+  @Get('/participants-in-my-match')
+  getParticipantsInMyMatch(@GetCurrentUserId() id: string) {
+    return this.matchPlayerService.getParticipantsInMyMatch(id);
+  }
 
-  // @Patch(':id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateMatchPlayerDto: UpdateMatchPlayerDto,
-  // ) {
-  //   return this.matchPlayerService.update(+id, updateMatchPlayerDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.matchPlayerService.remove(+id);
-  // }
+  @Get('/participants-in-match/:matchId')
+  getParticipantsInMatchById(@Param('matchId') matchId: string) {
+    return this.matchPlayerService.getParticipantsInMatchById(matchId);
+  }
+  @Put('/accept/:playermatchId')
+  acceptMatch(@Param('playermatchId') playerMatchId: string) {
+    return this.matchPlayerService.acceptMatch(playerMatchId);
+  }
+  @Put('/reject/:playermatchId')
+  rejectMatch(@Param('playermatchId') playerMatchId: string) {
+    return this.matchPlayerService.rejectMatch(playerMatchId);
+  }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Match } from './entities/match.entity';
@@ -9,6 +9,7 @@ import { MatchPlayerService } from 'src/match-player/match-player.service';
 export class MatchService {
   constructor(
     @InjectModel(Match.name) private matchModel: Model<Match>,
+    @Inject(forwardRef(() => MatchPlayerService))
     private readonly matchPlayerService: MatchPlayerService,
   ) {}
 
@@ -42,11 +43,9 @@ export class MatchService {
       .exec();
   }
 
-  // update(id: number, updateMatchDto: UpdateMatchDto) {
-  //   return `This action updates a #${id} match`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} match`;
-  // }
+  async isMyMatch(userId: string, matchId: string) {
+    const match = await this.matchModel.findById(matchId);
+    return match.userId.toString() === userId;
+  }
+  
 }
