@@ -9,6 +9,7 @@ import { MailerModule } from './mailer/mailer.module';
 import { MatchModule } from './match/match.module';
 import { MatchPlayerModule } from './match-player/match-player.module';
 import { TerrainModule } from './terrain/terrain.module';
+import { EquipeModule } from './equipe/equipe.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TerrainModule } from './terrain/terrain.module';
     MatchModule,
     MatchPlayerModule,
     TerrainModule,
+    EquipeModule,
   ],
   providers: [
     {

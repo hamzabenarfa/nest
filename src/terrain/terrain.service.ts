@@ -34,11 +34,11 @@ export class TerrainService {
   }
 
   async findAll() {
-    return  await this.terrainModel.find();
+    return await this.terrainModel.find();
   }
 
   async getMyTerrain(managerId: string) {
-    return await this.terrainModel.findOne({ managerId})
+    return await this.terrainModel.findOne({ managerId });
   }
 
   // update(id: number, updateTerrainDto: UpdateTerrainDto) {

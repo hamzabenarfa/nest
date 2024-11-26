@@ -36,9 +36,13 @@ export class MatchPlayerService {
       .populate({ path: 'userId', select: 'email name last_name phone' })
       .exec();
 
-    const myMatchPlayer = matchPlayer.filter(
-      (m) => m.matchId.userId.toString() === userId,
-    );
+    const myMatchPlayer = matchPlayer.filter((m) => {
+      if (m.matchId && m.matchId.userId) {
+        return m.matchId.userId.toString() === userId;
+      }
+      return false;
+    });
+
     return myMatchPlayer;
   }
   async findAllMatchPlayer() {

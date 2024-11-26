@@ -1,11 +1,17 @@
 import { Type } from 'class-transformer';
-import { IsDate, IsString, IsNumber, IsOptional, IsNotEmpty } from 'class-validator';
+import {
+  IsDate,
+  IsString,
+  IsNumber,
+  IsOptional,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class CreateTerrainDto {
-    @IsNotEmpty()
-    @Type(() => Date)
-    @IsDate()
-    date: Date;
+  @IsNotEmpty()
+  @Type(() => Date)
+  @IsDate()
+  date: Date;
   @IsString()
   label: string;
 
